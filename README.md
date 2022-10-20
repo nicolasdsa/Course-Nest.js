@@ -1,3 +1,3 @@
-# Site-Covid-19-Dados
+# Curso-Laravel-Node-Studio
 
-Projeto continuado
+Começando o curso
