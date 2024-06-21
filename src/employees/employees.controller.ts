@@ -8,11 +8,13 @@ import {
   Delete,
   Query,
   Ip,
+  UseGuards,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Prisma, Role } from '@prisma/client';
 import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { MyLoggerService } from 'src/my-logger/my-logger.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @SkipThrottle()
 @Controller('employees')
@@ -35,6 +37,7 @@ export class EmployeesController {
     return this.employeesService.findAll(role);
   }
 
+  @UseGuards(AuthGuard)
   @Throttle({ short: { ttl: 1000, limit: 1 } })
   @Get(':id')
   findOne(@Param('id') id: string) {

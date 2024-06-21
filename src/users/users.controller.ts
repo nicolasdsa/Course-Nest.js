@@ -7,12 +7,11 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query,
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
@@ -27,8 +26,8 @@ Overall, the constructor in this code snippet is responsible for injecting the [
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll(@Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN') {
-    return this.usersService.findAll(role);
+  findAll() {
+    return this.usersService.findAll();
   }
 
   @Get(':id')
@@ -37,7 +36,7 @@ Overall, the constructor in this code snippet is responsible for injecting the [
   }
 
   @Post()
-  create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
+  create(@Body(ValidationPipe) createUserDto: Prisma.UserCreateInput) {
     return this.usersService.create(createUserDto);
   }
 
